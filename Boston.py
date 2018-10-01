@@ -10,12 +10,19 @@ params = {
 url = 'https://clinicaltrialsapi.cancer.gov/v1/clinical-trials'
 r = requests.get(url, params=params)
 json_data = json.loads(r.text)
-if (int(json_data["total"]) < 10):
-    for i in range(json_data["total"]):
+
+
+def long():
+    if (int(json_data["total"]) < 10):
+        return json_data["total"]
+    else:
+        return 10
+totalNumbers = long()
+
+
+def listIds():
+    for i in range(totalNumbers):
         NCTID = json_data["trials"][i]["nct_id"]
         print(str(NCTID))
-else:
-    for i in range(10):
-        NCTID = json_data["trials"][i]["nct_id"]
-        print(str(NCTID))
-print ('всего записей: '+ str(json_data["total"]))
+listIds()
+print('всего записей: '+str(json_data["total"]))
